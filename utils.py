@@ -2,9 +2,12 @@ import PIL
 import numpy as np
 from matplotlib import pyplot as plt
 import skimage, skimage.transform
+import random
+from math import ceil
+
 
 # Image resize
-def imresize(img, height=None, width=None):
+def imresize(img, height=None, width=None, crop = False):
     # load image
     if height is not None and width is not None:
         ny = height
@@ -18,6 +21,13 @@ def imresize(img, height=None, width=None):
     else:
         ny = img.shape[0]
         nx = img.shape[1]
+
+    if crop:
+        startx = random.randrange(40)/100
+        starty = random.randrange(40)/100
+
+        img = img[ceil(img.shape[0]*startx):ceil(img.shape[0]*(startx + 0.6)), ceil(img.shape[1]*starty):ceil(img.shape[1]*(starty + 0.6))]
+
 
     return skimage.transform.resize(img, (int(ny), int(nx)), mode='constant')
 
